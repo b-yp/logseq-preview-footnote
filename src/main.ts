@@ -5,9 +5,7 @@ import { logseq as PL } from "../package.json";
 const pluginId = PL.id;
 const key = 'preview-footnote-dialog'
 
-function main() {
-  console.info(`#${pluginId}: MAIN`);
-
+const init = () => {
   const fns = top!.document.querySelectorAll('.fn .footref')
   const _top = top
   const list: { fn: Element, footdef: HTMLElement | null }[] = []
@@ -19,12 +17,11 @@ function main() {
     list.push({ fn, footdef })
   })
 
+  console.log('list', list)
+
   list.forEach(i => {
     const handlePreview = (e: any) => {
       const parentNode = i?.footdef?.parentNode
-
-      console.log("parentNode", parentNode)
-
       logseq.provideUI({
         key,
         close: 'outside',
@@ -57,6 +54,12 @@ function main() {
       dialog?.remove()
     })
   })
+}
+
+function main() {
+  console.info(`#${pluginId}: MAIN`);
+
+  logseq.App.onRouteChanged(init)
 }
 
 logseq.ready(main).catch(console.error);
