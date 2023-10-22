@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/b-yp/logseq-preview-footnote/compare/v1.0.0...v1.1.0) (2023-10-22)
+
+
+### Features
+
+* Listen again when the route changes ([06d0766](https://github.com/b-yp/logseq-preview-footnote/commit/06d0766ee35f35dff71a802f68719c9dc081170c))
+
 # 1.0.0 (2023-10-22)
 
 
