@@ -1,7 +1,8 @@
-- # loseq-base-plugin
-	- logseq 插件
-- ## 功能
-- ## 待办
+- # loseq preview footnote plugin
+  - Float preview logseq footnote
 - ## 演示
-- ## 鸣谢
+  - ![Gif](./Kapture%202023-10-22%20at%2017.47.59.gif)
+  - <video src="./Kapture 2023-10-22 at 17.47.59.webm" controls />
+  - <video src="./Kapture 2023-10-22 at 17.47.59.mp4" controls />
 - ## 许可证
+  - [MIT](https://choosealicense.com/licenses/mit/)
