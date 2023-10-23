@@ -5,7 +5,11 @@ import { logseq as PL } from "../package.json";
 const pluginId = PL.id;
 const key = 'preview-footnote-dialog'
 
+let processing = false // prevent duplicate call
+
 const init = () => {
+  if (processing) return // prevent duplicate call
+  processing = true // prevent duplicate call
   const fns = top!.document.querySelectorAll('.fn .footref')
   const _top = top
   const list: { fn: Element, footdef: HTMLElement | null }[] = []
@@ -54,12 +58,14 @@ const init = () => {
       dialog?.remove()
     })
   })
+  processing = false // prevent duplicate call
 }
 
 function main() {
   console.info(`#${pluginId}: MAIN`);
 
-  logseq.App.onRouteChanged(init)
+  logseq.App.onRouteChanged(init) //"onRouteChanged" is sometimes not called
+  logseq.App.onPageHeadActionsSlotted(init) // duplicate call, but it's ok.
 }
 
 logseq.ready(main).catch(console.error);
