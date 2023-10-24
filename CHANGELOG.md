@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/b-yp/logseq-preview-footnote/compare/v1.1.0...v1.1.1) (2023-10-24)
+
+
+### Bug Fixes
+
+*  "onRouteChanged" is sometimes not called ([497687a](https://github.com/b-yp/logseq-preview-footnote/commit/497687af3f22abbc0ee2a2191cce53251e9432e9))
+
 # [1.1.0](https://github.com/b-yp/logseq-preview-footnote/compare/v1.0.0...v1.1.0) (2023-10-22)
 
 
