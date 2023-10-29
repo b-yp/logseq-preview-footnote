@@ -1,5 +1,6 @@
 import "@logseq/libs"
 import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user"
+import { on } from "events"
 
 const pluginId = logseq.baseInfo.id
 const key = 'preview-footnote-dialog'
@@ -61,10 +62,14 @@ const init = () => {
     }
 
     i.fn.addEventListener('mouseenter', handlePreview)
-    i.fn.addEventListener('mouseleave', () => {
-      const dialog = parent.document.getElementById(`${pluginId}--${key}`)
-      dialog?.remove()
-    })
+    const mouseOver = ()=> {
+      i.fn.addEventListener('mouseenter', handlePreview, { once: true })
+      i.fn.addEventListener('mouseleave', () => {
+        mouseOver()
+    }, { once: true })
+    }
+    mouseOver() // first time
+
   })
   processing = false // prevent duplicate call
 }
