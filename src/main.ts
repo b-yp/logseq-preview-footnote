@@ -1,25 +1,33 @@
-import "@logseq/libs";
+import "@logseq/libs"
+import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user"
 
-import { logseq as PL } from "../package.json";
-
-const pluginId = PL.id;
+const pluginId = logseq.baseInfo.id
 const key = 'preview-footnote-dialog'
 
-let processing = false // prevent duplicate call
+let processing:boolean = false // prevent duplicate call
 
 const init = () => {
   if (processing) return // prevent duplicate call
   processing = true // prevent duplicate call
-  const fns = top!.document.querySelectorAll('.fn .footref')
-  const _top = top
+  let once:boolean = false
+  const fns = parent.document.querySelectorAll('.fn .footref') as NodeListOf<Element> //target list of footnotes
+
   const list: { fn: Element, footdef: HTMLElement | null }[] = []
 
-  fns.forEach(fn => {
+  for(const fn of fns) {
     const currentId = fn.id.split('.')[1]
     // TODO: 这里为什么用 querySelector 获取不到元素我不知道
-    const footdef = _top!.document.getElementById(`fn.${currentId}`)
+    let footdef = parent.document.getElementById(`fn.${currentId}`) as HTMLElement | null
+
+    // null means the footnote is not defined or collapsed
+    if (footdef === null) {
+      expandFootnotesBlock()  // try to expand the footnote block
+      once = true
+      return // get the footnote again
+    }
     list.push({ fn, footdef })
-  })
+  }
+  if (once) return // get the footnote again
 
   console.log('list', list)
 
@@ -54,7 +62,7 @@ const init = () => {
 
     i.fn.addEventListener('mouseenter', handlePreview)
     i.fn.addEventListener('mouseleave', () => {
-      const dialog = _top!.document.getElementById(`${pluginId}--${key}`)
+      const dialog = parent.document.getElementById(`${pluginId}--${key}`)
       dialog?.remove()
     })
   })
@@ -62,10 +70,40 @@ const init = () => {
 }
 
 function main() {
-  console.info(`#${pluginId}: MAIN`);
+  console.info(`#${pluginId}: MAIN`)
+
+  // Plugin Settings
+  logseq.useSettingsSchema([
+    {// add a setting to expand the footnote block
+      key: 'setFootnotesBlock',
+      type: 'string',
+      title: 'Expand the block that starts with "## Footnotes"',
+      description: 'To show the preview, the block must be expanded. Automatically expand the block.',
+      default: "## Footnotes",
+    },
+  ])
 
   logseq.App.onRouteChanged(init) //"onRouteChanged" is sometimes not called
   logseq.App.onPageHeadActionsSlotted(init) // duplicate call, but it's ok.
 }
 
-logseq.ready(main).catch(console.error);
+logseq.ready(main).catch(console.error)
+
+
+
+const expandFootnotesBlock = async () => {
+
+  logseq.UI.showMsg('Footnote not defined (or collapse)', "warning",{timeout: 2200}) // show message
+  const currentBlockTree = await logseq.Editor.getCurrentPageBlocksTree() as BlockEntity[] | null // get current block
+  if (currentBlockTree === null) return null
+  // find the block that starts with "Footnotes"
+  const footnotesBlock = currentBlockTree.find(block => block.content.startsWith("## Footnotes")) as BlockEntity | undefined
+  if (footnotesBlock === undefined) return null
+  const blockId = footnotesBlock.uuid // get the block id
+
+  logseq.Editor.setBlockCollapsed(blockId, {flag:false}) // expand the block
+
+  // wait for the block to be expanded
+  setTimeout(() => init(), 300); // try to get the footnote again
+
+}
