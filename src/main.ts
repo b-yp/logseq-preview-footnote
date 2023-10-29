@@ -1,74 +1,42 @@
 import "@logseq/libs"
 import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user"
-import { on } from "events"
 
 const pluginId = logseq.baseInfo.id
 const key = 'preview-footnote-dialog'
 
 let processing:boolean = false // prevent duplicate call
 
+
 const init = () => {
   if (processing) return // prevent duplicate call
+  const fns = parent.document.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element> //target list of footnotes
+  if (fns.length === 0) return // no footnote
   processing = true // prevent duplicate call
-  let once:boolean = false
-  const fns = parent.document.querySelectorAll('.fn .footref') as NodeListOf<Element> //target list of footnotes
-
-  const list: { fn: Element, footdef: HTMLElement | null }[] = []
 
   for(const fn of fns) {
     const currentId = fn.id.split('.')[1]
-    // TODO: 这里为什么用 querySelector 获取不到元素我不知道
-    let footdef = parent.document.getElementById(`fn.${currentId}`) as HTMLElement | null
+    const footNote = parent.document.getElementById(`fnr.${currentId}`) as HTMLElement | null
 
     // null means the footnote is not defined or collapsed
-    if (footdef === null) {
-      expandFootnotesBlock()  // try to expand the footnote block
-      once = true
-      return // get the footnote again
-    }
-    list.push({ fn, footdef })
-  }
-  if (once) return // get the footnote again
+    if (footNote === null) continue
+    
+    // dataset for preview
+    footNote.dataset.footnote = `fn.${currentId}`
+    footNote.dataset.footDef = `fnr.${currentId}`;
+    (fn as HTMLElement).dataset.foot = "true"
 
-  console.log('list', list)
-
-  list.forEach(i => {
-    const handlePreview = (e: any) => {
-      const parentNode = i?.footdef?.parentNode
-      logseq.provideUI({
-        key,
-        template: `
-          <div style="padding: 10px; overflow: auto;">
-            <div>
-            ${(parentNode as Element)?.outerHTML}
-            </div>
-          </div>
-        `,
-        style: {
-          left: `${e.clientX}px`,
-          top: `${e.clientY + 20}px`,
-          width: 'auto',
-          minWidth: '300px',
-          maxWidth: '600px',
-          backgroundColor: 'var(--ls-primary-background-color)',
-          color: 'var(--ls-primary-text-color)',
-          boxShadow: '1px 2px 5px var(--ls-secondary-background-color)',
-        },
-        attrs: {
-          title: 'Footnote content',
-        }
-      })
-    }
-
-    const mouseOver = ()=> {
-      i.fn.addEventListener('mouseenter', handlePreview, { once: true })
-      i.fn.addEventListener('mouseleave', () => {
-        mouseOver()
-    }, { once: true })
+    // add event listener
+    const mouseOver = () => {
+      footNote.addEventListener('mouseenter', function (this: HTMLElement, e: MouseEvent) {
+        if((parent.document.getElementById(`body>div[data-ref="${key}"]`) as Node | null) === null) handlePreview(this,e)
+      }, { once: true })
+      footNote.addEventListener('mouseleave', () => {
+        setTimeout(() =>   mouseOver()  , 2000); // event listener
+      }, { once: true })
     }
     mouseOver() // first time
+  }
 
-  })
   processing = false // prevent duplicate call
 }
 
@@ -88,15 +56,75 @@ function main() {
 
   logseq.App.onRouteChanged(init) //"onRouteChanged" is sometimes not called
   logseq.App.onPageHeadActionsSlotted(init) // duplicate call, but it's ok.
-}
+
+  const targetNode = parent.document.body.querySelector("div#root>div>main>div#app-container") as Node
+  const observer = new MutationObserver(() => {
+    // call init when .fn .footref is added
+    const fns = parent.document.body.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element>
+    if (fns.length === 0) return // no footnote
+
+    logseq.UI.showMsg('Footnotes check', "success", { timeout: 2200 }) // show message
+    init()
+
+    observer.disconnect()
+    setTimeout(() => observer.observe(targetNode, { childList: true, subtree: true }), 1000);
+  })
+
+  // observer for all blocks (for the first time)
+  setTimeout(() =>  observer.observe(targetNode, { childList: true, subtree: true }), 3000);
+  
+
+  logseq.beforeunload(async () => {
+    observer.disconnect()
+  })
+}//end main
 
 logseq.ready(main).catch(console.error)
 
 
+// model function
+const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
+  const elementId = element.dataset.footnote
+  if(!elementId) return
+  let elementFootNote = parent.document.getElementById(elementId) as Node | null
+  if (elementFootNote === null) {
+    elementFootNote = await expandFootnotesBlock(elementId)  // try to expand the footnote block
+    if (elementFootNote === null) return // footnote not defined
+  }
+  const parentNode = elementFootNote.parentElement as HTMLElement
+  if (parentNode === null) return
+        logseq.provideUI({
+          key,
+          template: `
+            <div style="padding: 8px; overflow: auto;">
+              <div>
+              ${parentNode.outerHTML}
+              </div>
+            </div>
+          `,
+          style: {
+            left: `${event.clientX}px`,
+            top: `${event.clientY + 20}px`,
+            width: 'auto',
+            minWidth: '300px',
+            maxWidth: '600px',
+            padding: ".1em",
+            backgroundColor: 'var(--ls-primary-background-color)',
+            color: 'var(--ls-primary-text-color)',
+            boxShadow: '1px 2px 5px var(--ls-secondary-background-color)',
+          },
+          attrs: {
+            title: 'Footnote content',
+          }
+        })
+}
 
-const expandFootnotesBlock = async () => {
 
-  logseq.UI.showMsg('Footnote not defined (or collapse)', "warning",{timeout: 2200}) // show message
+// expand the footnote block function
+const expandFootnotesBlock = async(elementId:string):Promise<HTMLElement | null> => {
+
+  logseq.UI.showMsg('Footnote not defined (or collapse)', "warning", { timeout: 2200 }) // show message
+
   const currentBlockTree = await logseq.Editor.getCurrentPageBlocksTree() as BlockEntity[] | null // get current block
   if (currentBlockTree === null) return null
   // find the block that starts with "Footnotes"
@@ -104,9 +132,7 @@ const expandFootnotesBlock = async () => {
   if (footnotesBlock === undefined) return null
   const blockId = footnotesBlock.uuid // get the block id
 
-  logseq.Editor.setBlockCollapsed(blockId, {flag:false}) // expand the block
+  logseq.Editor.setBlockCollapsed(blockId, { flag: false }) // expand the blockId
 
-  // wait for the block to be expanded
-  setTimeout(() => init(), 300); // try to get the footnote again
-
+  return parent.document.getElementById(elementId) as HTMLElement | null // return the footnote element
 }
