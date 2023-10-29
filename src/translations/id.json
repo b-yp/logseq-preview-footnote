@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Anotasi diperiksa",
+  "Close the preview when mouse leave it": "Tutup pratinjau saat mouse bergerak menjauh",
+  "Close the preview when open other page": "Menutup pratinjau saat Anda membuka halaman lain",
+  "Delay before closing preview": "Tunda sebelum menutup pratinjau.",
+  "Enable YouTube preview optimization": "Mengaktifkan pengoptimalan untuk pratinjau YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Perluas blok yang dimulai dengan \"## Catatan kaki\"",
+  "False > The preview will be retained even if you open another page.": "Salah > Pratinjau dipertahankan saat halaman lain dibuka.",
+  "False > You can display multiple previews.": "Salah > Beberapa pratinjau dapat ditampilkan.",
+  "Footnote": "Anotasi",
+  "Footnote not defined (or collapse)": "Anotasi tidak didefinisikan (atau diciutkan)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Jika pengaturan ini dinonaktifkan, pratinjau tidak akan hilang. Anda harus menutupnya secara manual. Pengaturan ini kehilangan efeknya setelah 4 detik.",
+  "Limit the number of previews to one": "Batasi jumlah pratinjau menjadi satu",
+  "Maximum width of preview": "Lebar maksimum pratinjau",
+  "Mouse leave ms delay (The shortest time to disappear)": "Tunda waktu sebelum mouse pergi (waktu tersingkat menghilang)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Untuk melihat pratinjau, Anda perlu memperluas blok. Membuka blok secara otomatis.",
+  "plugin": "Plug-in"
+}

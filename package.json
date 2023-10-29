@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@logseq/libs": "^0.0.14"
+    "@logseq/libs": "^0.0.14",
+    "logseq-l10n": "^0.2.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.3",

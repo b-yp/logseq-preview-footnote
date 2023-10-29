@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "已检查的批注",
+  "Close the preview when mouse leave it": "鼠标移开时关闭预览",
+  "Close the preview when open other page": "打开其他页面时关闭预览",
+  "Delay before closing preview": "在关闭预览之前延迟。",
+  "Enable YouTube preview optimization": "开启 YouTube 预览优化功能",
+  "Expand the block that starts with \"## Footnotes\"": "展开以“## 脚注”开头的块",
+  "False > The preview will be retained even if you open another page.": "错误> 打开其他页面时，将保留预览。",
+  "False > You can display multiple previews.": "False > 可以显示多个预览。",
+  "Footnote": "注解",
+  "Footnote not defined (or collapse)": "注释未定义（或折叠）",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "如果禁用此设置，预览将不会消失。 您需要手动关闭它。 此设置将在 4 秒后失去效果。",
+  "Limit the number of previews to one": "将预览数量限制为一个",
+  "Maximum width of preview": "预览的最大宽度",
+  "Mouse leave ms delay (The shortest time to disappear)": "鼠标离开前的延迟时间（消失的最短时间）",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "要查看预览，您需要展开该块。 自动展开方块。",
+  "plugin": "插件"
+}

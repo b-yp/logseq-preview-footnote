@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Ek açıklamalar kontrol edildi",
+  "Close the preview when mouse leave it": "Fare uzaklaştığında önizlemeyi kapatın",
+  "Close the preview when open other page": "Başka bir sayfa açtığınızda önizlemeyi kapatın",
+  "Delay before closing preview": "Önizlemeyi kapatmadan önce geciktirin.",
+  "Enable YouTube preview optimization": "YouTube önizlemeleri için optimizasyonu etkinleştirme",
+  "Expand the block that starts with \"## Footnotes\"": "\"## Dipnotlar\" ile başlayan bloğu genişletin",
+  "False > The preview will be retained even if you open another page.": "Yanlış > Diğer sayfalar açıldığında önizleme korunur.",
+  "False > You can display multiple previews.": "Yanlış > Birden fazla önizleme görüntülenebilir.",
+  "Footnote": "ek açıklama",
+  "Footnote not defined (or collapse)": "Ek açıklama tanımlanmadı (veya daraltıldı)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Bu ayar devre dışı bırakılırsa, önizleme kaybolmaz. Manuel olarak kapatmanız gerekir. Bu ayar 4 saniye sonra etkisini kaybeder.",
+  "Limit the number of previews to one": "Önizleme sayısını bir ile sınırlayın",
+  "Maximum width of preview": "Önizlemenin maksimum genişliği",
+  "Mouse leave ms delay (The shortest time to disappear)": "Fare ayrılmadan önceki gecikme süresi (kaybolmak için en kısa süre)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Önizlemeyi görmek için bloğu genişletmeniz gerekir. Blokları otomatik olarak açın.",
+  "plugin": "Eklentiler"
+}

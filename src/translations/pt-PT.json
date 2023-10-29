@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Anotações verificadas",
+  "Close the preview when mouse leave it": "Feche a pré-visualização quando o rato se afastar",
+  "Close the preview when open other page": "Fechar a pré-visualização quando abrir outra página",
+  "Delay before closing preview": "Atrase antes de fechar a pré-visualização.",
+  "Enable YouTube preview optimization": "Ativar a otimização para pré-visualizações do YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Expanda o bloco que começa com \"## Notas de rodapé\"",
+  "False > The preview will be retained even if you open another page.": "Falso > A visualização é preservada quando outras páginas são abertas.",
+  "False > You can display multiple previews.": "Falso > Várias visualizações podem ser exibidas.",
+  "Footnote": "anotação",
+  "Footnote not defined (or collapse)": "Anotação não definida (ou recolhida)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Se essa configuração estiver desativada, a visualização não desaparecerá. Você precisa fechá-lo manualmente. Esta definição perde o efeito após 4 segundos.",
+  "Limit the number of previews to one": "Limitar o número de visualizações a uma",
+  "Maximum width of preview": "Largura máxima da pré-visualização",
+  "Mouse leave ms delay (The shortest time to disappear)": "Tempo de atraso antes de o rato sair (menor tempo para desaparecer)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Para ver a visualização, você precisa expandir o bloco. Desdobrar blocos automaticamente.",
+  "plugin": "Plug-ins"
+}

@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Annotaties gecontroleerd",
+  "Close the preview when mouse leave it": "Sluit de voorvertoning wanneer de muis wegbeweegt",
+  "Close the preview when open other page": "Sluit het voorbeeld wanneer u een andere pagina opent",
+  "Delay before closing preview": "Wacht met het sluiten van de preview.",
+  "Enable YouTube preview optimization": "Optimalisatie inschakelen voor YouTube-voorbeelden",
+  "Expand the block that starts with \"## Footnotes\"": "Vouw het blok uit dat begint met \"## Voetnoten\"",
+  "False > The preview will be retained even if you open another page.": "Valse > Het voorbeeld blijft behouden wanneer andere pagina's worden geopend.",
+  "False > You can display multiple previews.": "False > Er kunnen meerdere voorbeelden worden weergegeven.",
+  "Footnote": "aantekening",
+  "Footnote not defined (or collapse)": "Annotatie niet gedefinieerd (of samengevouwen)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Als deze instelling is uitgeschakeld, verdwijnt het voorbeeld niet. U moet het handmatig sluiten. Deze instelling verliest zijn effect na 4 seconden.",
+  "Limit the number of previews to one": "Beperk het aantal voorvertoningen tot één",
+  "Maximum width of preview": "Maximale breedte van de voorvertoning",
+  "Mouse leave ms delay (The shortest time to disappear)": "Vertragingstijd voordat de muis vertrekt (kortste tijd om te verdwijnen)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Om het voorbeeld te zien, moet je het blok uitvouwen. Blokken automatisch uitvouwen.",
+  "plugin": "Plug-ins"
+}

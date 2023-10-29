@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "주석 선택",
+  "Close the preview when mouse leave it": "마우스가 멀어질 때 미리보기 닫기",
+  "Close the preview when open other page": "다른 페이지를 열 때 미리 보기 닫기",
+  "Delay before closing preview": "미리보기를 닫기 전에 지연합니다.",
+  "Enable YouTube preview optimization": "YouTube 미리보기 최적화 사용 설정",
+  "Expand the block that starts with \"## Footnotes\"": "\"## 각주\"로 시작하는 블록을 확장합니다.",
+  "False > The preview will be retained even if you open another page.": "False > 다른 페이지를 열 때 미리 보기가 유지됩니다.",
+  "False > You can display multiple previews.": "거짓 > 여러 개의 미리보기를 표시할 수 있습니다.",
+  "Footnote": "주석",
+  "Footnote not defined (or collapse)": "주석이 정의되지 않음(또는 축소됨)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "이 설정을 비활성화하면 미리 보기가 사라지지 않습니다. 수동으로 닫아야 합니다. 이 설정은 4초 후에 효과가 사라집니다.",
+  "Limit the number of previews to one": "미리 보기 수를 1개로 제한",
+  "Maximum width of preview": "미리 보기의 최대 너비",
+  "Mouse leave ms delay (The shortest time to disappear)": "마우스가 떠나기 전의 지연 시간(사라지는 데 걸리는 가장 짧은 시간)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "미리보기를 보려면 블록을 확장해야 합니다. 블록을 자동으로 펼칩니다.",
+  "plugin": "플러그인"
+}

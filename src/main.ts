@@ -1,8 +1,28 @@
 import "@logseq/libs";
 import { BlockEntity } from "@logseq/libs/dist/LSPlugin.user";
-
+import { setup as l10nSetup, t } from "logseq-l10n"; //https://github.com/sethyuan/logseq-l10n
+import af from "./translations/af.json";
+import de from "./translations/de.json";
+import es from "./translations/es.json";
+import fr from "./translations/fr.json";
+import id from "./translations/id.json";
+import it from "./translations/it.json";
+import ja from "./translations/ja.json";
+import ko from "./translations/ko.json";
+import nbNO from "./translations/nb-NO.json";
+import nl from "./translations/nl.json";
+import pl from "./translations/pl.json";
+import ptBR from "./translations/pt-BR.json";
+import ptPT from "./translations/pt-PT.json";
+import ru from "./translations/ru.json";
+import sk from "./translations/sk.json";
+import tr from "./translations/tr.json";
+import uk from "./translations/uk.json";
+import zhCN from "./translations/zh-CN.json";
+import zhHant from "./translations/zh-Hant.json";
 const pluginId = logseq.baseInfo.id;
 const key = "preview-footnote-dialog";
+const showMsg = "\n\nPreview Footnote ";
 
 let processing = false; // prevent duplicate call
 
@@ -88,26 +108,28 @@ const pluginSettings = () =>
       // add a setting to expand the footnote block
       key: "setFootnotesBlock",
       type: "string",
-      title: 'Expand the block that starts with "## Footnotes"',
-      description:
-        "To show the preview, the block must be expanded. Automatically expand the block.",
+      title: t('Expand the block that starts with "## Footnotes"'),
+      description: t(
+        "To show the preview, the block must be expanded. Automatically expand the block."
+      ),
       default: "## Footnotes",
     },
     {
       // close the Preview when mouse leave it
       key: "closePreviewMouseLeave",
       type: "boolean",
-      title: "Close the preview when mouse leave it",
-      description:
-        "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.",
+      title: t("Close the preview when mouse leave it"),
+      description: t(
+        "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds."
+      ),
       default: false,
     },
     {
       // mouse leave ms delay
       key: "mouseDelay",
       type: "enum",
-      title: "Mouse leave ms delay (The shortest time to disappear)",
-      description: "Delay before the preview is displayed.",
+      title: t("Mouse leave ms delay (The shortest time to disappear)"),
+      description: t("Delay before closing preview"),
       default: "1000",
       enumChoices: [
         "600",
@@ -125,24 +147,25 @@ const pluginSettings = () =>
       // limit the number of previews to one
       key: "limitPreview",
       type: "boolean",
-      title: "Limit the number of previews to one",
-      description: "False > You can display multiple previews.",
+      title: t("Limit the number of previews to one"),
+      description: t("False > You can display multiple previews."),
       default: true,
     },
     {
       // close the preview when open other page
       key: "closePreviewWhenOpenPage",
       type: "boolean",
-      title: "Close the preview when open other page",
-      description:
-        "False > The preview will be retained even if you open another page.",
+      title: t("Close the preview when open other page"),
+      description: t(
+        "False > The preview will be retained even if you open another page."
+      ),
       default: true,
     },
     {
       // max width of preview
       key: "maxWidth",
       type: "number",
-      title: "Maximum width of preview",
+      title: t("Maximum width of preview"),
       description: "200px < 1200px",
       inputAs: "range",
       default: "100",
@@ -151,7 +174,7 @@ const pluginSettings = () =>
       // enable YouTube preview optimization
       key: "youtubePreview",
       type: "boolean",
-      title: "Enable YouTube preview optimization",
+      title: t("Enable YouTube preview optimization"),
       description: "",
       default: true,
     },
@@ -174,7 +197,13 @@ const observer = () => {
     ) as NodeListOf<Element>;
     if (fns.length === 0) return; // no footnote
 
-    logseq.UI.showMsg("Footnotes check", "success", { timeout: 2200 }); // show message
+    logseq.UI.showMsg(
+      t("Checked footnotes") + showMsg + t("plugin"),
+      "success",
+      {
+        timeout: 2200,
+      }
+    ); // show message
     init();
 
     observer.disconnect();
@@ -280,7 +309,7 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
       boxShadow: "1px 2px 5px var(--ls-secondary-background-color)",
     },
     attrs: {
-      title: "Footnote",
+      title: t("Footnote"),
     },
   });
 
@@ -319,9 +348,13 @@ const closePreviewMouseLeave = (UIkey: string) =>
 const expandFootnotesBlock = async (
   elementId: string
 ): Promise<HTMLElement | null> => {
-  logseq.UI.showMsg("Footnote not defined (or collapse)", "warning", {
-    timeout: 2200,
-  }); // show message
+  logseq.UI.showMsg(
+    t("Footnote not defined (or collapse)") + showMsg + t("plugin"),
+    "warning",
+    {
+      timeout: 2200,
+    }
+  ); // show message
 
   const currentBlockTree = (await logseq.Editor.getCurrentPageBlocksTree()) as
     | BlockEntity[]
@@ -343,10 +376,37 @@ const expandFootnotesBlock = async (
  * The main function of the plugin.
  * It initializes the plugin settings and sets up the necessary event listeners.
  */
-const main = () => {
+const main = async () => {
   console.info(`#${pluginId}: MAIN`);
 
-  pluginSettings(); // init settings
+  // localization
+  await l10nSetup({
+    builtinTranslations: {
+      //Full translations
+      af,
+      de,
+      es,
+      fr,
+      id,
+      it,
+      ja,
+      ko,
+      "nb-NO": nbNO,
+      nl,
+      pl,
+      "pt-BR": ptBR,
+      "pt-PT": ptPT,
+      ru,
+      sk,
+      tr,
+      uk,
+      "zh-CN": zhCN,
+      "zh-Hant": zhHant,
+    },
+  });
+
+  // init settings
+  pluginSettings();
 
   // init
   logseq.App.onRouteChanged(() => init({ pageLoad: true })); //"onRouteChanged" is sometimes not called

@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Aantekeninge nagegaan",
+  "Close the preview when mouse leave it": "Maak die voorskou toe as die muis wegbeweeg",
+  "Close the preview when open other page": "Maak die voorskou toe as u 'n ander bladsy oopmaak",
+  "Delay before closing preview": "Vertraag voordat u die voorskou sluit.",
+  "Enable YouTube preview optimization": "Skakel optimalisering aan vir YouTube-voorskoue",
+  "Expand the block that starts with \"## Footnotes\"": "Brei die blok uit wat begin met \"## Voetnote\"",
+  "False > The preview will be retained even if you open another page.": "Vals > Die voorskou word bewaar wanneer ander bladsye oopgemaak word.",
+  "False > You can display multiple previews.": "Onwaar > Verskeie voorskoue kan vertoon word.",
+  "Footnote": "AANTEKENING",
+  "Footnote not defined (or collapse)": "Aantekening nie gedefinieer (of in duie gestort) nie",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "As hierdie instelling gedeaktiveer is, sal die voorskou nie verdwyn nie. U moet dit met die hand toemaak. Hierdie instelling verloor sy effek na 4 sekondes.",
+  "Limit the number of previews to one": "Beperk die aantal voorskoue tot een",
+  "Maximum width of preview": "Maksimum breedte van die voorskou",
+  "Mouse leave ms delay (The shortest time to disappear)": "Vertraag tyd voordat die muis vertrek (kortste tyd om te verdwyn)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Om die voorskou te sien, moet u die blok uitbrei. Vou blokke outomaties uit.",
+  "plugin": "Inproppe"
+}
