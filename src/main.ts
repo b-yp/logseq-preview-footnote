@@ -37,7 +37,6 @@ const init = () => {
       const parentNode = i?.footdef?.parentNode
       logseq.provideUI({
         key,
-        close: 'outside',
         template: `
           <div style="padding: 10px; overflow: auto;">
             <div>
@@ -61,7 +60,6 @@ const init = () => {
       })
     }
 
-    i.fn.addEventListener('mouseenter', handlePreview)
     const mouseOver = ()=> {
       i.fn.addEventListener('mouseenter', handlePreview, { once: true })
       i.fn.addEventListener('mouseleave', () => {
