@@ -9,7 +9,7 @@ let processing:boolean = false // prevent duplicate call
 
 const init = () => {
   if (processing) return // prevent duplicate call
-  const fns = parent.document.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element> //target list of footnotes
+  const fns = parent.document.body.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element> //target list of footnotes
   if (fns.length === 0) return // no footnote
   processing = true // prevent duplicate call
 
@@ -28,7 +28,7 @@ const init = () => {
     // add event listener
     const mouseOver = () => {
       footNote.addEventListener('mouseenter', function (this: HTMLElement, e: MouseEvent) {
-        if((parent.document.getElementById(`body>div[data-ref="${key}"]`) as Node | null) === null) handlePreview(this,e)
+        if((parent.document.querySelector(`body>div#${logseq.baseInfo.id}--${key}`) as Node | null) === null) handlePreview(this,e)
       }, { once: true })
       footNote.addEventListener('mouseleave', () => {
         setTimeout(() =>   mouseOver()  , 2000); // event listener
@@ -52,12 +52,27 @@ function main() {
       description: 'To show the preview, the block must be expanded. Automatically expand the block.',
       default: "## Footnotes",
     },
+    {// close the popup when mouse leave it
+      key: 'closePopupRemoveMouseLeave',
+      type: 'boolean',
+      title: 'Close the popup when mouse leave it',
+      description: 'If this setting is disabled, the popup will not disappear. You will need to close it manually. This setting will be disabled after 10 seconds. This setting has no effect after that 8 seconds.',
+      default: false,
+    },
+    {// mouse leave ms delay
+      key: 'mouseDelay',
+      type: 'enum',
+      title: 'Mouse out ms delay',
+      description: 'Delay before the popup is displayed.',
+      default: "1500",
+      enumChoices: ["500", "1000", "1500", "2000", "3000"]
+    },
   ])
 
   logseq.App.onRouteChanged(init) //"onRouteChanged" is sometimes not called
   logseq.App.onPageHeadActionsSlotted(init) // duplicate call, but it's ok.
 
-  const targetNode = parent.document.body.querySelector("div#root>div>main>div#app-container") as Node
+  const targetNode = parent.document.querySelector("body>div#root>div>main>div#app-container") as Node
   const observer = new MutationObserver(() => {
     // call init when .fn .footref is added
     const fns = parent.document.body.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element>
@@ -102,6 +117,7 @@ const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
               </div>
             </div>
           `,
+
           style: {
             left: `${event.clientX}px`,
             top: `${event.clientY + 20}px`,
@@ -114,9 +130,20 @@ const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
             boxShadow: '1px 2px 5px var(--ls-secondary-background-color)',
           },
           attrs: {
-            title: 'Footnote content',
+            title: 'Footnote',
           }
         })
+  
+        if (logseq.settings!.closePopupRemoveMouseLeave === true)setTimeout(() => {
+           
+            const ele = parent.document.querySelector(`body>div#${logseq.baseInfo.id}--${key}`) as HTMLDivElement | null
+          if (ele === null) return
+            ele.addEventListener('mouseleave',eventListener, { once: true } )
+          setTimeout(() => ele.removeEventListener('mouseleave',eventListener), 8000);
+          function eventListener(this: HTMLElement) {
+              this.remove()
+            }
+        }, Number(logseq.settings!.mouseDelay | 10));
 }
 
 
