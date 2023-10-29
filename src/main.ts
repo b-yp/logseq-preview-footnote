@@ -6,6 +6,10 @@ const key = "preview-footnote-dialog";
 
 let processing = false; // prevent duplicate call
 
+/**
+ * Initializes previews for footnotes.
+ * @param flag - An optional object containing a `pageLoad` boolean flag to indicate if the page is being loaded.
+ */
 const init = (flag?: { pageLoad?: boolean }) => {
   if (
     flag &&
@@ -73,10 +77,12 @@ const init = (flag?: { pageLoad?: boolean }) => {
   processing = false; // prevent duplicate call
 };
 
-function main() {
-  console.info(`#${pluginId}: MAIN`);
-
-  // Plugin Settings
+// plugin settings function
+/**
+ * Defines the plugin settings schema for Preview Footnote plugin.
+ * @returns An array of settings objects.
+ */
+const pluginSettings = () =>
   logseq.useSettingsSchema([
     {
       // add a setting to expand the footnote block
@@ -100,7 +106,7 @@ function main() {
       // mouse leave ms delay
       key: "mouseDelay",
       type: "enum",
-      title: "Mouse out ms delay (The shortest time to disappear)",
+      title: "Mouse leave ms delay (The shortest time to disappear)",
       description: "Delay before the preview is displayed.",
       default: "1000",
       enumChoices: [
@@ -151,16 +157,20 @@ function main() {
     },
   ]);
 
-  logseq.App.onRouteChanged(() => init({ pageLoad: true })); //"onRouteChanged" is sometimes not called
-  logseq.App.onPageHeadActionsSlotted(() => init({ pageLoad: true })); // duplicate call, but it's ok.
-
+// observer function
+const observer = () => {
+  /**
+   * Selects the target node in the DOM tree using a CSS selector and returns it as a Node object.
+   *
+   * @returns The target node as a Node object.
+   */
   const targetNode = parent.document.querySelector(
     "body>div#root>div>main>div#app-container"
   ) as Node;
   const observer = new MutationObserver(() => {
     // call init when .fn .footref is added
     const fns = parent.document.body.querySelectorAll(
-      'sup.fn>a.footref:not([data-foot="true"])'
+      'main sup.fn>a.footref:not([data-foot="true"])'
     ) as NodeListOf<Element>;
     if (fns.length === 0) return; // no footnote
 
@@ -180,12 +190,19 @@ function main() {
     3000
   );
 
+  // logseq beforeunload event (plugin off)
   logseq.beforeunload(async () => {
     observer.disconnect();
   });
-} //end main
+};
 
 // model function
+/**
+ * Handles the preview of a footnote when the user hovers over it.
+ * @param element - The HTML element of the footnote.
+ * @param event - The mouse event that triggered the preview.
+ * @returns void
+ */
 const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
   let elementId = element.dataset.footnote;
   if (!elementId) elementId = `fnr.${element.outerText}`;
@@ -207,11 +224,13 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
     logseq.settings!.limitPreview === true
       ? key
       : random + elementId.replace(/\./g, "-");
+
+  // preview UI
   const maxWidth = logseq.settings!.maxWidth * 10 + 200;
   logseq.provideUI({
     key: UIkey,
     template: `
-            <div style="padding: 8px; overflow: auto;">
+            <div style="padding: 8px; overflow: auto;" title="">
               <div>
               ${parentNode.outerHTML}
               </div>
@@ -221,6 +240,11 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
                 ? ""
                 : `
             <style>
+              body>div[data-ref="${logseq.baseInfo.id}"]:hover {
+                outline: 6px solid var(--ls-quaternary-background-color);
+                outline-offset: 6px;
+              }
+              /* YouTube preview optimization */
               body>div#${logseq.baseInfo.id}--${UIkey} div.is-paragraph {
                 position: relative;
                 min-height: 330px;
@@ -260,24 +284,38 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
     },
   });
 
+  // close the preview when mouse leave it
   if (logseq.settings!.closePreviewMouseLeave === true)
-    setTimeout(() => {
-      const ele = parent.document.querySelector(
-        `body>div#${logseq.baseInfo.id}--${UIkey}`
-      ) as HTMLDivElement | null;
-      if (ele === null) return;
-      ele.addEventListener("mouseleave", eventListener, { once: true });
-      setTimeout(
-        () => ele.removeEventListener("mouseleave", eventListener),
-        4100
-      );
-      function eventListener(this: HTMLElement) {
-        this.remove();
-      }
-    }, Number(logseq.settings!.mouseDelay | 10));
+    closePreviewMouseLeave(UIkey);
 };
 
+// close the preview when mouse leave it
+/**
+ * Closes the preview when the mouse leaves the preview element.
+ * @param UIkey - The unique identifier of the preview element.
+ */
+const closePreviewMouseLeave = (UIkey: string) =>
+  setTimeout(() => {
+    const ele = parent.document.querySelector(
+      `body>div#${logseq.baseInfo.id}--${UIkey}`
+    ) as HTMLDivElement | null;
+    if (ele === null) return;
+    ele.addEventListener("mouseleave", eventListener, { once: true });
+    setTimeout(
+      () => ele.removeEventListener("mouseleave", eventListener),
+      4100
+    );
+    function eventListener(this: HTMLElement) {
+      this.remove();
+    }
+  }, Number(logseq.settings!.mouseDelay | 10));
+
 // expand the footnote block function
+/**
+ * Expands the footnote block and returns the corresponding HTML element.
+ * @param elementId - The ID of the HTML element to return.
+ * @returns The expanded HTML element or null if it cannot be found.
+ */
 const expandFootnotesBlock = async (
   elementId: string
 ): Promise<HTMLElement | null> => {
@@ -300,5 +338,22 @@ const expandFootnotesBlock = async (
 
   return parent.document.getElementById(elementId) as HTMLElement | null; // return the footnote element
 };
+
+/**
+ * The main function of the plugin.
+ * It initializes the plugin settings and sets up the necessary event listeners.
+ */
+const main = () => {
+  console.info(`#${pluginId}: MAIN`);
+
+  pluginSettings(); // init settings
+
+  // init
+  logseq.App.onRouteChanged(() => init({ pageLoad: true })); //"onRouteChanged" is sometimes not called
+  logseq.App.onPageHeadActionsSlotted(() => init({ pageLoad: true })); // duplicate call, but it's ok.
+
+  // observer for all blocks
+  observer();
+}; //end main
 
 logseq.ready(main).catch(console.error);
