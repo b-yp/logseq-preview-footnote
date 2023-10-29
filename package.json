@@ -1,6 +1,14 @@
 {
   "name": "logseq-preview-footnote",
-  "version": "1.1.0",
+  "description": "Preview footnote in Logseq",
+  "repository": "https://github.com/b-yp/logseq-preview-footnote",
+  "author": "b-yp",
+  "logseq": {
+    "id": "byp-logseq-preview-footnote",
+    "icon": "./logo.svg",
+    "title" : "Preview Footnote"
+  },
+  "effect"  : true,
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
@@ -29,9 +37,5 @@
     "typescript": "5.2.2",
     "vite": "4.5.0",
     "vite-plugin-logseq": "1.1.2"
-  },
-  "logseq": {
-    "id": "byp-logseq-preview-footnote",
-    "icon": "./logo.svg"
   }
 }
