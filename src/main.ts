@@ -7,7 +7,13 @@ const key = 'preview-footnote-dialog'
 let processing:boolean = false // prevent duplicate call
 
 
-const init = () => {
+const init = (flag?:{pageLoad?: boolean }) => {
+  
+  if (flag && flag.pageLoad === true &&logseq.settings!.closePreviewWhenOpenPage === true) {
+    const ele = parent.document.querySelector(`body>div[data-ref="${logseq.baseInfo.id}"]`) as HTMLDivElement | null
+    if (ele) ele.remove()
+  }
+  
   if (processing) return // prevent duplicate call
   const fns = parent.document.body.querySelectorAll('sup.fn>a.footref:not([data-foot="true"])') as NodeListOf<Element> //target list of footnotes
   if (fns.length === 0) return // no footnote
@@ -23,17 +29,25 @@ const init = () => {
     // dataset for preview
     footNote.dataset.footnote = `fn.${currentId}`
     footNote.dataset.footDef = `fnr.${currentId}`;
-    (fn as HTMLElement).dataset.foot = "true"
+    (fn as HTMLElement).dataset.foot = "true" // flag for editing block
+
 
     // add event listener
     const mouseOver = () => {
+
       footNote.addEventListener('mouseenter', function (this: HTMLElement, e: MouseEvent) {
-        if((parent.document.querySelector(`body>div#${logseq.baseInfo.id}--${key}`) as Node | null) === null) handlePreview(this,e)
+        if ((parent.document.querySelector(`body>div[data-ref="${logseq.baseInfo.id}"]`) as Node | null) // if the preview is already open
+          && logseq.settings!.limitPreview === true) return // limit the number of previews to one
+        else
+          handlePreview(this, e) // show preview
       }, { once: true })
-      footNote.addEventListener('mouseleave', () => {
+
+      footNote.addEventListener('mouseleave', () => { // Close the preview when mouse leave it
         setTimeout(() =>   mouseOver()  , 2000); // event listener
       }, { once: true })
+
     }
+
     mouseOver() // first time
   }
 
@@ -52,25 +66,39 @@ function main() {
       description: 'To show the preview, the block must be expanded. Automatically expand the block.',
       default: "## Footnotes",
     },
-    {// close the popup when mouse leave it
-      key: 'closePopupRemoveMouseLeave',
+    {// close the Preview when mouse leave it
+      key: 'closePreviewMouseLeave',
       type: 'boolean',
-      title: 'Close the popup when mouse leave it',
-      description: 'If this setting is disabled, the popup will not disappear. You will need to close it manually. This setting will be disabled after 10 seconds. This setting has no effect after that 8 seconds.',
+      title: 'Close the preview when mouse leave it',
+      description: 'If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting will be disabled after 10 seconds. This setting has no effect after that 8 seconds.',
       default: false,
     },
     {// mouse leave ms delay
       key: 'mouseDelay',
       type: 'enum',
-      title: 'Mouse out ms delay',
-      description: 'Delay before the popup is displayed.',
-      default: "1500",
-      enumChoices: ["500", "1000", "1500", "2000", "3000"]
+      title: 'Mouse out ms delay (The shortest time to disappear)',
+      description: 'Delay before the preview is displayed.',
+      default: "1000",
+      enumChoices: ["600", "800", "1000","1200","1400","1600","1800", "2000","2500","3000"]
     },
+    {// limit the number of previews to one
+      key: 'limitPreview',
+      type: 'boolean',
+      title: 'Limit the number of previews to one',
+      description: 'False > You can display multiple previews.',
+      default: true,
+    },
+    {// close the preview when open other page
+      key: 'closePreviewWhenOpenPage',
+      type: 'boolean',
+      title: 'Close the preview when open other page',
+      description: 'False > The preview will be retained even if you open another page.',
+      default: true,
+    }
   ])
 
-  logseq.App.onRouteChanged(init) //"onRouteChanged" is sometimes not called
-  logseq.App.onPageHeadActionsSlotted(init) // duplicate call, but it's ok.
+  logseq.App.onRouteChanged(() => init({pageLoad: true})) //"onRouteChanged" is sometimes not called
+  logseq.App.onPageHeadActionsSlotted(() =>  init({pageLoad: true})) // duplicate call, but it's ok.
 
   const targetNode = parent.document.querySelector("body>div#root>div>main>div#app-container") as Node
   const observer = new MutationObserver(() => {
@@ -99,8 +127,9 @@ logseq.ready(main).catch(console.error)
 
 // model function
 const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
-  const elementId = element.dataset.footnote
-  if(!elementId) return
+  let elementId = element.dataset.footnote
+  if (!elementId)  elementId =`fnr.${element.outerText}`
+  
   let elementFootNote = parent.document.getElementById(elementId) as Node | null
   if (elementFootNote === null) {
     elementFootNote = await expandFootnotesBlock(elementId)  // try to expand the footnote block
@@ -108,8 +137,12 @@ const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
   }
   const parentNode = elementFootNote.parentElement as HTMLElement
   if (parentNode === null) return
+
+  // random key
+  const random = Math.random().toString(36).slice(-1) + Math.random().toString(36).slice(-1)
+  const UIkey = logseq.settings!.limitPreview === true ? key : random+elementId.replace(/\./g, "-")
         logseq.provideUI({
-          key,
+          key:UIkey,
           template: `
             <div style="padding: 8px; overflow: auto;">
               <div>
@@ -134,9 +167,9 @@ const handlePreview = async(element:HTMLElement,event:MouseEvent) => {
           }
         })
   
-        if (logseq.settings!.closePopupRemoveMouseLeave === true)setTimeout(() => {
+        if (logseq.settings!.closePreviewMouseLeave === true)setTimeout(() => {
            
-            const ele = parent.document.querySelector(`body>div#${logseq.baseInfo.id}--${key}`) as HTMLDivElement | null
+            const ele = parent.document.querySelector(`body>div#${logseq.baseInfo.id}--${UIkey}`) as HTMLDivElement | null
           if (ele === null) return
             ele.addEventListener('mouseleave',eventListener, { once: true } )
           setTimeout(() => ele.removeEventListener('mouseleave',eventListener), 8000);
