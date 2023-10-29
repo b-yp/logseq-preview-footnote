@@ -93,7 +93,7 @@ function main() {
       type: "boolean",
       title: "Close the preview when mouse leave it",
       description:
-        "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting will be disabled after 10 seconds. This setting has no effect after that 8 seconds.",
+        "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.",
       default: false,
     },
     {
@@ -113,7 +113,6 @@ function main() {
         "1800",
         "2000",
         "2500",
-        "3000",
       ],
     },
     {
@@ -131,6 +130,23 @@ function main() {
       title: "Close the preview when open other page",
       description:
         "False > The preview will be retained even if you open another page.",
+      default: true,
+    },
+    {
+      // max width of preview
+      key: "maxWidth",
+      type: "number",
+      title: "Maximum width of preview",
+      description: "200px < 1200px",
+      inputAs: "range",
+      default: "100",
+    },
+    {
+      // enable YouTube preview optimization
+      key: "youtubePreview",
+      type: "boolean",
+      title: "Enable YouTube preview optimization",
+      description: "",
       default: true,
     },
   ]);
@@ -191,6 +207,7 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
     logseq.settings!.limitPreview === true
       ? key
       : random + elementId.replace(/\./g, "-");
+  const maxWidth = logseq.settings!.maxWidth * 10 + 200;
   logseq.provideUI({
     key: UIkey,
     template: `
@@ -199,14 +216,40 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
               ${parentNode.outerHTML}
               </div>
             </div>
+            ${
+              logseq.settings!.youtubePreview === false
+                ? ""
+                : `
+            <style>
+              body>div#${logseq.baseInfo.id}--${UIkey} div.is-paragraph {
+                position: relative;
+                min-height: 330px;
+                min-width: 588px;
+                width:100%;
+                height:0;
+                padding-top: 56.25%;
+                margin-bottom: 1em;
+              
+                &>iframe[src*="youtube"] {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+            </style>
+            `
+            }
           `,
 
     style: {
       left: `${event.clientX}px`,
       top: `${event.clientY + 20}px`,
       width: "auto",
-      minWidth: "300px",
-      maxWidth: "600px",
+      minWidth: "200px",
+      maxWidth: `${maxWidth}px`,
+      height: "auto",
       padding: ".1em",
       backgroundColor: "var(--ls-primary-background-color)",
       color: "var(--ls-primary-text-color)",
@@ -226,7 +269,7 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
       ele.addEventListener("mouseleave", eventListener, { once: true });
       setTimeout(
         () => ele.removeEventListener("mouseleave", eventListener),
-        8000
+        4100
       );
       function eventListener(this: HTMLElement) {
         this.remove();
