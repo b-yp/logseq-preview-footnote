@@ -130,7 +130,7 @@ const pluginSettings = () =>
       type: "enum",
       title: t("Mouse leave ms delay (The shortest time to disappear)"),
       description: t("Delay before closing preview"),
-      default: "1000",
+      default: "1200",
       enumChoices: [
         "600",
         "800",
@@ -168,7 +168,7 @@ const pluginSettings = () =>
       title: t("Maximum width of preview"),
       description: "200px < 1200px",
       inputAs: "range",
-      default: "100",
+      default: "60",
     },
     {
       // enable YouTube preview optimization
