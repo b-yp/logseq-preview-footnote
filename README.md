@@ -1,5 +1,7 @@
 # logseq-preview-footnote plugin
 
+[English](https://github.com/b-yp/logseq-preview-footnote) | [中文](https://github.com/b-yp/logseq-preview-footnote/blob/main/README.chCN.md) | [日本語](https://github.com/b-yp/logseq-preview-footnote/blob/main/README.ja.md)
+
 Provides previews of footnotes.
 
 ## Overview
