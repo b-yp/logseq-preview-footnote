@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Перевірено анотації",
+  "Close the preview when mouse leave it": "Закривати попередній перегляд, коли миша віддаляється",
+  "Close the preview when open other page": "Закриття попереднього перегляду, коли ви відкриваєте іншу сторінку",
+  "Delay before closing preview": "Затримка перед закриттям попереднього перегляду.",
+  "Enable YouTube preview optimization": "Як увімкнути оптимізацію для попереднього перегляду на YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Розгорніть блок, який починається з \"## Виноски\"",
+  "False > The preview will be retained even if you open another page.": "False > Попередній перегляд зберігається, коли відкриваються інші сторінки.",
+  "False > You can display multiple previews.": "False > Може відображатися кілька попередніх переглядів.",
+  "Footnote": "Анотації",
+  "Footnote not defined (or collapse)": "Анотація не визначена (або згорнута)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Якщо цей параметр вимкнено, попередній перегляд не зникне. Закривати його потрібно вручну. Цей параметр втрачає свою дію через 4 секунди.",
+  "Limit the number of previews to one": "Обмежте кількість попереднього перегляду до одного",
+  "Maximum width of preview": "Максимальна ширина попереднього перегляду",
+  "Mouse leave ms delay (The shortest time to disappear)": "Час затримки до відходу миші (найкоротший час зникнення)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Щоб побачити прев'ю, потрібно розгорнути блок. Автоматичне розкладання блоків.",
+  "plugin": "Плагіни"
+}

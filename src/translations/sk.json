@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Skontrolované anotácie",
+  "Close the preview when mouse leave it": "Zatvorenie ukážky, keď sa myš vzdiali",
+  "Close the preview when open other page": "Zatvorenie ukážky pri otvorení inej strany",
+  "Delay before closing preview": "Oneskorenie pred zatvorením ukážky.",
+  "Enable YouTube preview optimization": "Zapnutie optimalizácie pre ukážky na YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Rozbalenie bloku začínajúceho reťazcom ## Poznámky pod čiarou",
+  "False > The preview will be retained even if you open another page.": "Nepravdivé > Ukážka sa zachová aj pri otvorení iných stránok.",
+  "False > You can display multiple previews.": "Falošné > Je možné zobraziť viacero ukážok.",
+  "Footnote": "anotácia",
+  "Footnote not defined (or collapse)": "Anotácia nie je definovaná (alebo zbalená)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Ak je toto nastavenie vypnuté, ukážka nezmizne. Musíte ho zavrieť manuálne. Toto nastavenie stráca účinok po 4 sekundách.",
+  "Limit the number of previews to one": "Obmedzenie počtu ukážok na jednu",
+  "Maximum width of preview": "Maximálna šírka ukážky",
+  "Mouse leave ms delay (The shortest time to disappear)": "Čas oneskorenia pred odchodom myši (najkratší čas na zmiznutie)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Ak chcete zobraziť ukážku, musíte rozbaliť blok. Automaticky rozložte bloky.",
+  "plugin": "Zásuvné moduly"
+}

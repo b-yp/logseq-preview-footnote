@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Аннотации проверены",
+  "Close the preview when mouse leave it": "Закрывать предварительный просмотр при удалении мыши",
+  "Close the preview when open other page": "Закрывать окно предварительного просмотра при открытии другой страницы",
+  "Delay before closing preview": "Задержка перед закрытием предварительного просмотра.",
+  "Enable YouTube preview optimization": "Как включить оптимизацию для предварительного просмотра на YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Разверните блок, который начинается с «## Сноски»",
+  "False > The preview will be retained even if you open another page.": "False > Предварительный просмотр сохраняется при открытии других страниц.",
+  "False > You can display multiple previews.": "False > Можно отобразить несколько вариантов предварительного просмотра.",
+  "Footnote": "аннотация",
+  "Footnote not defined (or collapse)": "Аннотация не определена (или свернута)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Если эта настройка отключена, предварительный просмотр не исчезнет. Закрывать его нужно вручную. Этот параметр теряет свое действие через 4 секунды.",
+  "Limit the number of previews to one": "Ограничьте количество предварительных просмотров до одного",
+  "Maximum width of preview": "Максимальная ширина предварительного просмотра",
+  "Mouse leave ms delay (The shortest time to disappear)": "Время задержки перед уходом мыши (кратчайшее время исчезновения)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Чтобы увидеть превью, нужно развернуть блок. Автоматическое разворачивание блоков.",
+  "plugin": "Плагины"
+}

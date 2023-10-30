@@ -1,0 +1,18 @@
+{
+  "Checked footnotes": "Annotations vérifiées",
+  "Close the preview when mouse leave it": "Fermer l’aperçu lorsque la souris s’éloigne",
+  "Close the preview when open other page": "Fermer l’aperçu lorsque vous ouvrez une autre page",
+  "Delay before closing preview": "Délai avant la fermeture de l’aperçu.",
+  "Enable YouTube preview optimization": "Activer l’optimisation pour les aperçus YouTube",
+  "Expand the block that starts with \"## Footnotes\"": "Développez le bloc qui commence par « ## Notes de bas de page »",
+  "False > The preview will be retained even if you open another page.": "False > L’aperçu est conservé lorsque d’autres pages sont ouvertes.",
+  "False > You can display multiple previews.": "Faux > Plusieurs aperçus peuvent être affichés.",
+  "Footnote": "annotation",
+  "Footnote not defined (or collapse)": "Annotation non définie (ou réduite)",
+  "If this setting is disabled, the preview will not disappear. You will need to close it manually. This setting has no effect after that 4 seconds.": "Si ce paramètre est désactivé, l’aperçu ne disparaîtra pas. Vous devez le fermer manuellement. Ce paramètre perd son effet au bout de 4 secondes.",
+  "Limit the number of previews to one": "Limiter le nombre d’aperçus à un seul",
+  "Maximum width of preview": "Largeur maximale de l’aperçu",
+  "Mouse leave ms delay (The shortest time to disappear)": "Temps de retard avant le départ de la souris (temps le plus court pour disparaître)",
+  "To show the preview, the block must be expanded. Automatically expand the block.": "Pour afficher l’aperçu, vous devez développer le bloc. Dépliez automatiquement les blocs.",
+  "plugin": "Plug-ins"
+}
