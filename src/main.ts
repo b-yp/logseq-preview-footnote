@@ -274,7 +274,7 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
                 outline-offset: 6px;
               }
               /* YouTube preview optimization */
-              body>div#${logseq.baseInfo.id}--${UIkey} div.is-paragraph {
+              body>div#${logseq.baseInfo.id}--${UIkey} div.is-paragraph:has(>iframe[src*="youtube"]) {
                 position: relative;
                 min-height: 330px;
                 min-width: 588px;
