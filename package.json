@@ -6,9 +6,9 @@
   "logseq": {
     "id": "byp-logseq-preview-footnote",
     "icon": "./logo.svg",
-    "title" : "Preview Footnote"
+    "title": "Preview Footnote"
   },
-  "effect"  : true,
+  "effect": true,
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
@@ -37,5 +37,6 @@
     "typescript": "5.2.2",
     "vite": "4.5.0",
     "vite-plugin-logseq": "1.1.2"
-  }
+  },
+  "version": "1.2.0"
 }

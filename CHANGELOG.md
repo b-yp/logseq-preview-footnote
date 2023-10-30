@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/b-yp/logseq-preview-footnote/compare/v1.1.1...v1.2.0) (2023-10-30)
+
+
+### Features
+
+* **Add:** [#7](https://github.com/b-yp/logseq-preview-footnote/issues/7) Automatically expand the "Footnotes" block ([04cc14f](https://github.com/b-yp/logseq-preview-footnote/commit/04cc14fe0018e495001136d27cd7b5d63a034497))
+* **Add:** plugin settings > close popup when mouse leav it ([8558e30](https://github.com/b-yp/logseq-preview-footnote/commit/8558e30c47d0b8db09a89e64763170700f8296d5))
+* **Add:** plugin settings > YouTube preview optimization ([0165cf8](https://github.com/b-yp/logseq-preview-footnote/commit/0165cf8aa927b5621b430b386a9d8c3863c62d57))
+* observer (check all blocks) ([9866134](https://github.com/b-yp/logseq-preview-footnote/commit/9866134f27557633be86a777d551e4ebb9b64ba0))
+
 ## [1.1.1](https://github.com/b-yp/logseq-preview-footnote/compare/v1.1.0...v1.1.1) (2023-10-24)
 
 
