@@ -77,3 +77,5 @@
 ライセンス > [MIT](https://choosealicense.com/licenses/mit/)
 
 著者 > [@b-yp](https://github.com/b-yp)
+
+翻訳者 > [@YU000jp](https://github.com/YU000jp)
