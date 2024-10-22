@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/b-yp/logseq-preview-footnote/compare/v1.2.0...v1.2.1) (2024-10-22)
+
+
+### Bug Fixes
+
+* fixed build failed ([79b4fce](https://github.com/b-yp/logseq-preview-footnote/commit/79b4fceeb6452ce4211040f6156c5463240d0970))
+* temporarily fixed the issue of too frequent notifications ([152cfae](https://github.com/b-yp/logseq-preview-footnote/commit/152cfae3131c62cb10d8530aa17abbc1723ab0cb))
+
 # [1.2.0](https://github.com/b-yp/logseq-preview-footnote/compare/v1.1.1...v1.2.0) (2023-10-30)
 
 
