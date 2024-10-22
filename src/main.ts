@@ -182,6 +182,7 @@ const pluginSettings = () =>
 
 // observer function
 const observer = () => {
+  const showMsgList: string[] = []
   /**
    * Selects the target node in the DOM tree using a CSS selector and returns it as a Node object.
    *
@@ -197,13 +198,18 @@ const observer = () => {
     ) as NodeListOf<Element>;
     if (fns.length === 0) return; // no footnote
 
-    logseq.UI.showMsg(
-      t("Checked footnotes") + showMsg + t("plugin"),
-      "success",
-      {
-        timeout: 2200,
-      }
-    ); // show message
+    // TODO: If a notification has already been shown, it will not be shown again. bug
+    if (!showMsgList.includes(fns[0].id)) {
+      logseq.UI.showMsg(
+        t("Checked footnotes") + showMsg + t("plugin"),
+        "success",
+        {
+          timeout: 2200,
+        }
+      ); // show message
+    }
+    showMsgList.push(fns[0].id)
+
     init();
 
     observer.disconnect();
@@ -264,10 +270,9 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
               ${parentNode.outerHTML}
               </div>
             </div>
-            ${
-              logseq.settings!.youtubePreview === false
-                ? ""
-                : `
+            ${logseq.settings!.youtubePreview === false
+        ? ""
+        : `
             <style>
               body>div[data-ref="${logseq.baseInfo.id}"]:hover {
                 outline: 6px solid var(--ls-quaternary-background-color);
@@ -293,7 +298,7 @@ const handlePreview = async (element: HTMLElement, event: MouseEvent) => {
               }
             </style>
             `
-            }
+      }
           `,
 
     style: {
